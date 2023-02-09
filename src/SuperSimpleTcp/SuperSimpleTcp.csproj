@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netcoreapp3.1;netstandard2.0;netstandard2.1;net461;net48;net5.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>netcoreapp3.1;netstandard2.0;netstandard2.1;net461;net48;net6.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Version>3.0.7</Version>
 		<PackageReleaseNotes>Fix for PollSocket method, thank you @zllvm @Energiz0r @Espen-Kalhagen-Element-Logic</PackageReleaseNotes>
@@ -49,14 +49,6 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
-		<DocumentationFile>SimpleTcp.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
-		<DocumentationFile>SimpleTcp.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
 		<DocumentationFile>SimpleTcp.xml</DocumentationFile>
 	</PropertyGroup>
 
