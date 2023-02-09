@@ -909,7 +909,7 @@ namespace SuperSimpleTcp
                         action.Invoke();
                     }
 
-                    _statistics.ReceivedBytes += data.Count;
+                    _statistics.ReceivedBytes += data.Length;
                     UpdateClientLastSeen(client.IpPort);
                 }
                 catch (IOException)
@@ -962,7 +962,7 @@ namespace SuperSimpleTcp
             if (client != null) client.Dispose();
         }
            
-        private async Task<ArraySegment<byte>> DataReadAsync(ClientMetadata client, CancellationToken token)
+        private async Task<byte[]> DataReadAsync(ClientMetadata client, CancellationToken token)
         { 
             byte[] buffer = new byte[_settings.StreamBufferSize];
             int read = 0;
@@ -978,7 +978,7 @@ namespace SuperSimpleTcp
                         if (read > 0)
                         {
                             await ms.WriteAsync(buffer, 0, read, token).ConfigureAwait(false);
-                            return new ArraySegment<byte>(ms.GetBuffer(), 0, (int)ms.Length);
+                            return ms.ToArray();
                         }
                         else
                         {
@@ -998,7 +998,7 @@ namespace SuperSimpleTcp
                         if (read > 0)
                         {
                             await ms.WriteAsync(buffer, 0, read, token).ConfigureAwait(false);
-                            return new ArraySegment<byte>(ms.GetBuffer(), 0, (int)ms.Length);
+                            return ms.ToArray();
                         }
                         else
                         {

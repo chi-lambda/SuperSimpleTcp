@@ -896,17 +896,9 @@ namespace SuperSimpleTcp
                             {
                                 _lastActivity = DateTime.Now;
 
-                                Action action = () => _events.HandleDataReceived(this, new DataReceivedEventArgs(ServerIpPort, data));
-                                if (_settings.UseAsyncDataReceivedEvents)
-                                {
-                                    _ = Task.Run(action, token);
-                                }
-                                else
-                                {
-                                    action.Invoke();
-                                }
+                                _events.HandleDataReceived(this, new DataReceivedEventArgs(ServerIpPort, data));
 
-                                _statistics.ReceivedBytes += data.Count;
+                                _statistics.ReceivedBytes += data.Length;
 
                                 return data;
                             }
@@ -965,7 +957,7 @@ namespace SuperSimpleTcp
             Dispose();
         }
 
-        private async Task<ArraySegment<byte>> DataReadAsync(CancellationToken token)
+        private async Task<byte[]> DataReadAsync(CancellationToken token)
         {
             byte[] buffer = new byte[_settings.StreamBufferSize];
             int read = 0;
@@ -986,7 +978,7 @@ namespace SuperSimpleTcp
                     using (MemoryStream ms = new MemoryStream())
                     {
                         ms.Write(buffer, 0, read);
-                        return new ArraySegment<byte>(ms.GetBuffer(), 0, (int)ms.Length);
+                        return ms.ToArray();
                     }
                 }
                 else
